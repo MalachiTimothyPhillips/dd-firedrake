@@ -29,33 +29,37 @@ v=TestFunction(V)
 f=Function(V)
 x,y=SpatialCoordinate(mesh)
 f.interpolate((8*pi*pi)*sin(2*pi*x)*sin(2*pi*y))
-a1 = (dot(grad(v), grad(u))) * dx
+
+# TODO: Need to be able to do this integral just over
+# omega1 or just over omega2 -- this probably means that
+# I need to enforce a 0 dirichlet boundary condition on
+# all points that are outside of this domain!!
+a1 = (dot(grad(u), grad(v))) * dx
 L1 = f * v * dx(omega1_id)
 a2 = (dot(grad(v), grad(u))) * dx
-L2 = f * v * dx(omega2_id)
+L2 = f * v * dx
 
 u1=Function(V)
 u2=Function(V)
 u1.interpolate(0*x*y)
 u2.interpolate(0*x*y)
 
-"""
+a = (dot(grad(v), grad(u))) * dx
+L = f * v * dx
+u=Function(V)
 
-Homogeneous dirichlet boundary conditions throughout mean that faces 1,2,3,4 must
-have zero on their own boundary conditions
+bc1=DirichletBC(V,0,1)
+bc2=DirichletBC(V,0,4)
+bc3=DirichletBC(V,0,5)
+bc4=DirichletBC(V,0,6)
+bc5=DirichletBC(V,0,7)
+bc6=DirichletBC(V,0,8)
+solve(a == L, u, bcs=[bc1,bc2,bc3,bc4,bc5,bc6])
+f.interpolate(sin(2*pi*x)*sin(2*pi*y))
+original_solution_error=sqrt(assemble(dot(u-f,u-f)*dx))
+print(original_solution_error)
 
-"""
 
-class MyBC(DirichletBC):
-    def __init__(self, V, value, markers):
-        # Call superclass init
-        # We provide a dummy subdomain id.
-        super(MyBC, self).__init__(V, value, 0)
-        # Override the "nodes" property which says where the boundary
-        # condition is to be applied.
-        self.nodes = np.unique(np.where(markers.dat.data_ro_with_halos == 0)[0])
-
-x=SpatialCoordinate(mesh)
 bc1=DirichletBC(V,0,1)
 bc2=DirichletBC(V,0,4)
 bc3=DirichletBC(V,0,5)
@@ -63,27 +67,20 @@ bc4=DirichletBC(V,0,6)
 bc5=DirichletBC(V,0,7)
 bc6=DirichletBC(V,0,8)
 
-bc=DirichletBC(V,1,omega1_face_id)
-q=Function(V)
-q=u2
-bc.apply(q)
-bc_dOmega1_n_Omega2=bc
+e1=u2
+e2=u1
+bc_dOmega1_n_Omega2=DirichletBC(V,e1,omega1_face_id)
+bc_dOmega2_n_Omega1=DirichletBC(V,e2,omega2_face_id)
 
-bc=DirichletBC(V,1,omega2_face_id)
-q=Function(V)
-q=u2
-bc.apply(q)
+nSchwarzIter=100
 
-bc_dOmega2_n_Omega1=bc
-
-nSchwarzIter=2
-
-p_omega_1 = LinearVariationalProblem(a1,L1,u1,bcs=[bc1,bc2,bc3,bc4,bc5,bc6,bc_dOmega1_n_Omega2])
-p_omega_2 = LinearVariationalProblem(a2,L2,u2,bcs=[bc1,bc2,bc3,bc4,bc5,bc6,bc_dOmega2_n_Omega1])
-solver1 = LinearVariationalSolver(p_omega_1)
-solver2 = LinearVariationalSolver(p_omega_2)
-
+params={'ksp_type':'preonly','pc_type':'lu'}
 
 for iteration in range(nSchwarzIter):
-    solver1.solve()
-    solver2.solve()
+    solve(a1 == L1,u1,bcs=[bc1,bc2,bc3,bc4,bc5,bc6,bc_dOmega1_n_Omega2], solver_parameters=params)
+    solve(a2 == L2,u2,bcs=[bc1,bc2,bc3,bc4,bc5,bc6,bc_dOmega2_n_Omega1], solver_parameters=params)
+
+e1=assemble(dot(u1-f,u1-f)*dx(omega1_id))
+e2=assemble(dot(u2-f,u2-f)*dx(omega2_id))
+new_solution_error=sqrt(e1**2+e2**2)
+print(new_solution_error)

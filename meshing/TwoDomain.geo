@@ -2,15 +2,15 @@
 Mesh.Algorithm = 8;
 N=1e22;
 Point(1)={0,0,0,N};
-Point(2)={0.5,0,0,N};
-Point(3)={1.0,0,0,N};
-Point(4)={1.5,0,0,N};
+Point(2)={0.33,0,0,N};
+Point(3)={0.66,0,0,N};
+Point(4)={1.0,0,0,N};
 
 // x points along y=1
 Point(5)={0,1,0,N};
-Point(6)={0.5,1,0,N};
-Point(7)={1.0,1,0,N};
-Point(8)={1.5,1,0,N};
+Point(6)={0.33,1,0,N};
+Point(7)={0.66,1,0,N};
+Point(8)={1.0,1,0,N};
 
 // vertical lines first
 Line(1)={1,5};
