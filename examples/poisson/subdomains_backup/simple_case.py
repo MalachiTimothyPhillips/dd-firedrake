@@ -15,7 +15,8 @@ We are confident that we must have the correct solution for this particular prob
 """
 
 from firedrake import *
-mesh = UnitSquareMesh(20,20)
+#mesh = UnitSquareMesh(20,20)
+mesh=Mesh("TwoDomain.msh")
 V=FunctionSpace(mesh, "CG", 1) # piecewise linear elements
 
 u=TrialFunction(V)
@@ -33,15 +34,12 @@ Homogeneous dirichlet boundary conditions throughout mean that faces 1,2,3,4 mus
 have zero on their own boundary conditions
 
 """
-bc1=DirichletBC(V,0.0,1)
-bc2=DirichletBC(V,0.0,2)
-bc3=DirichletBC(V,0.0,3)
-bc4=DirichletBC(V,0.0,4) # without these particular BCs, we would be solving the Neumann problem instead (which is not what we want!)
-
-# form as linear variational problem to avoid re-assembly
-problem=LinearVariationalProblem(a,L,u,bcs=[bc1,bc2,bc3,bc4])
-solver=LinearVariationalSolver(problem)
-solver.solve()
-File("poisson.pvd").write(u)
+bc1=DirichletBC(V,0,1)
+bc2=DirichletBC(V,0,4)
+bc3=DirichletBC(V,0,5)
+bc4=DirichletBC(V,0,6)
+bc5=DirichletBC(V,0,7)
+bc6=DirichletBC(V,0,8)
+solve(a == L, u, bcs=[bc1,bc2,bc3,bc4,bc5,bc6])
 f.interpolate(sin(2*pi*x)*sin(2*pi*y))
 print("Error in solution of: {}".format(sqrt(assemble(dot(u-f,u-f)*dx))))
