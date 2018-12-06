@@ -16,6 +16,7 @@ We are confident that we must have the correct solution for this particular prob
 
 from firedrake import *
 import numpy as np
+import time
 mesh=Mesh("2x2Overlap.msh")
 V=FunctionSpace(mesh, "CG", 1) # piecewise linear elements
 
@@ -26,6 +27,22 @@ x,y=SpatialCoordinate(mesh)
 f.interpolate((8*pi*pi)*sin(2*pi*x)*sin(2*pi*y))
 params={'ksp_type':'preonly','pc_type':'lu'}
 
+a=dot(grad(u),grad(v))*dx
+L=f*v*dx
+u_entire=Function(V)
+
+myBCSurfaces=[1,2,10,11,15,16,8,5]
+myBCs=[]
+for surface in myBCSurfaces:
+    myBCs.append(DirichletBC(V,0,surface))
+start_time=time.time()
+solve(a==L,u_entire,bcs=myBCs,solver_parameters=params)
+end_time=time.time()
+print("Elapsed time for entire solve was %g seconds" % (end_time-start_time))
+
+# for our purposes, we need to also generate timing data for the regular solve
+
+start_time=time.time()
 dirichletBCs={1:0,2:0,10:0,11:0,15:0,16:0,8:0,5:0}
 
 domains={"Omega1":1,"Omega2":2,"Omega3":3,"Omega4":4}
@@ -138,5 +155,7 @@ for iteration in range(nSchwarz):
 	solve(aOmega2==LOmega2,uOmega2,bcs=bcOmega2,solver_parameters=params)
 	solve(aOmega3==LOmega3,uOmega3,bcs=bcOmega3,solver_parameters=params)
 	solve(aOmega4==LOmega4,uOmega4,bcs=bcOmega4,solver_parameters=params)
+end_time=time.time()
+print("Elapsed time for segregated solve was %g seconds" % (end_time-start_time))
 # does this line exist?
 # perhaps some other lines after the fact?
