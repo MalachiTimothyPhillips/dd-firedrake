@@ -71,8 +71,8 @@ L2 = f * v * dx(omega2_id)
 
 u1=Function(V)
 u2=Function(V)
-u1.interpolate(0*x*y)
-u2.interpolate(0*x*y)
+u1.interpolate(1*x*y)
+u2.interpolate(2*x*y)
 
 a = (dot(grad(v), grad(u))) * dx
 L = f * v * dx
