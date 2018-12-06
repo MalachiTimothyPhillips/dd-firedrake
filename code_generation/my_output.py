@@ -49,7 +49,7 @@ class MyBC(DirichletBC):
     def __init__(self, V, value, markers):
         super(MyBC, self).__init__(V, value, 0)
         self.nodes = np.unique(np.where(markers.dat.data_ro_with_halos == 0)[0])
-
+    
 hOmega1=FunctionSpace(mesh,'DG', 0)
 I_Omega1 = Function(hOmega1)
 par_loop( 'for ( int i=0; i < f.dofs; i++ ) f[i][0] = 1.0;', dx(Omega1), {'f': (I_Omega1, WRITE)} )
@@ -74,7 +74,7 @@ par_loop( 'for (int i=0; i<A.dofs; i++) A[i][0] = fmax(A[i][0], B[0][0]);',dx, {
 bcs=[]
 for surface, value in dirichletBCs.items():
     bcs.append(DirichletBC(V,value,surface))
-
+    
 BC_Omega1_only=MyBC(V,0,I_cg_Omega1)
 BC_Omega2_only=MyBC(V,0,I_cg_Omega2)
 BC_Omega3_only=MyBC(V,0,I_cg_Omega3)
