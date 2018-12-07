@@ -1,9 +1,9 @@
 import numpy as np
-"""
-Small helper function for my particular case. Returns the interface id
-numbers for my specific case. For more details, please consult the documentation.
-"""
 def five_point_stencil(N,i,j):
+    """
+    Small helper function for my particular case. Returns the interface id
+    numbers for my specific case. For more details, please consult the documentation.
+    """
     ip1j=4*N*j+4*i+4
     im1j=4*N*j+4*i+2
     ijp1=4*N*j+4*i+3
@@ -90,93 +90,120 @@ class SquareMeshBoundaryConditions(EnumerateBoundaryConditions):
         the intersecting domains -- note that this corresponds to a
         5-point stencil for a NxN grid
         """
-        N=N.self
-        intefaces={}
+        N=self.N
+        interfaces={}
         omegaStr="Omega{}"
         interfaceStr="d{}n{}"
         omegas=np.zeros((N,N)).astype(str)
         myDomain=1
-        for i in range(N):
-            for j in range(N):
+        for j in range(N):
+            for i in range(N):
                 omegas[i][j]=omegaStr.format(myDomain)
                 myDomain+=1
-        for i in range(N):
-            for j in range(N):
-                # what connections are we allowed to make here?
-                # at most, we have 4. Notice that the connections
-                # are of the form (i,j) connects to (i+1,j),(i-1,j)
-                # (i,j-1),(i,j+1) for the connection. In particular,
-                # if i-1,i+1,j-1,j+1 are OUTSIDE of the regular domain,
-                # then we know not to draw a connection there
-                if(i-1 < 0):
-                    # we are on the lhs boundary
-                    if(j-1 < 0):
-                        # we are on the lhs corner, only draw between i+1,j+1 connections
-                        # my current domain
-                        oij=omegas[i][j]
-                        oip1j=omegas[i+1][j]
-                        oijp1=omegas[i][j+1]
-                        interface_ip1j=interfaceStr.format(oij,oip1j)
-                        interfaces[interface_ip1j]=4
-                        interface_ijp1=interfaceStr.format(oij,oijp1)
-                        interfaces[interface_ijp1]=3 # gauranteed at this point
-                        continue
-                    if(j+1>N-1):
-                        # we are on the top LHS corner
-                        oij=omegas[i][j]
-                        oip1j=omegas[i+1][j]
-                        oijm1=omegas[i][j-1]
-                        interface_ip1j=interfaceStr.format(oij,oip1j)
-                        interfaces[interface_ip1j]=4*N*(N-1)+3
-                        interface_ijm1=interfaceStr.format(oij,oijm1)
-                        interfaces[interface_ijm1]=4*N*(N-1)+1
-                        continue
-                    # if it reaches here, then we are on the LHS but NOT on a corner
-                    oij=omegas[i][j]
-                    oip1j=omegas[i+1][j]
-                    oijm1=omegas[i][j-1]
-                    oijp1=omegas[i][j+1]
-                    interface_ip1j=interfaceStr.format(oij,oip1j)
-                    interfaces[interface_ip1j]=4*N*j+4
-                    interface_ijp1=interfaceStr.format(oij,oijp1)
-                    interfaces[interface_ijp1]=4*N*j+3
-                    interface_ijm1=interfaceStr.format(oij,oijm1)
-                    interfaces[interface_ijm1]=4*N*j+1
-                    continue
-                #TODO: code is not correct here -- need to ensure correctness!
-                if(i+1 >N-1):
-                    # we are on the rhs boundary
-                    if(j-1 < 0):
-                        # we are on the rhs bottom corner, only draw between i-1,j+1 connections
-                        # my current domain
-                        oij=omegas[i][j]
-                        oim1j=omegas[i-1][j]
-                        oijp1=omegas[i][j+1]
-                        interface_im1j=interfaceStr.format(oij,oim1j)
-                        interfaces[interface_im1j]=4*(N-1)+2
-                        interface_ijp1=interfaceStr.format(oij,oijp1)
-                        interfaces[interface_ijp1]=4*(N-1)+3 # gauranteed at this point
-                        continue
-                    if(j+1>N-1):
-                        # we are on the top RHS corner
-                        oij=omegas[i][j]
-                        oim1j=omegas[i-1][j]
-                        oijm1=omegas[i][j-1]
-                        interface_im1j=interfaceStr.format(oij,oim1j)
-                        interfaces[interface_im1j]=4*N*(N-1)+4*(N-1)+2
-                        interface_ijm1=interfaceStr.format(oij,oijm1)
-                        interfaces[interface_ijm1]=4*N*(N-1)+4*(N-1)+1
-                        continue
-                    # if it reaches here, then we are on the RHS but NOT on a corner
-                    oij=omegas[i][j]
-                    oim1j=omegas[i-1][j]
-                    oijm1=omegas[i][j-1]
-                    oijp1=omegas[i][j+1]
-                    interface_im1j=interfaceStr.format(oij,oim1j)
-                    interfaces[interface_im1j]=4*N*j+4*(N-1)+2
-                    interface_ijp1=interfaceStr.format(oij,oijp1)
-                    interfaces[interface_ijp1]=4*N*j+4*(N-1)+3
-                    interface_ijm1=interfaceStr.format(oij,oijm1)
-                    interfaces[interface_ijm1]=4*N*j+4*(N-1)+1
-                    continue
+        # interior points
+        for i in range(1,N-1):
+            for j in range(1,N-1):
+                ids=five_point_stencil(N,i,j)
+                interfaces[interfaceStr.format(omegas[i][j],omegas[i+1][j])]=ids[0]
+                interfaces[interfaceStr.format(omegas[i][j],omegas[i-1][j])]=ids[1]
+                interfaces[interfaceStr.format(omegas[i][j],omegas[i][j+1])]=ids[2]
+                interfaces[interfaceStr.format(omegas[i][j],omegas[i][j-1])]=ids[3]
+        # left hand side of the boundary
+        i = 0
+        for j in range(1,N-1):
+            ids=five_point_stencil(N,i,j)
+            interfaces[interfaceStr.format(omegas[i][j],omegas[i+1][j])]=ids[0]
+            interfaces[interfaceStr.format(omegas[i][j],omegas[i][j+1])]=ids[2]
+            interfaces[interfaceStr.format(omegas[i][j],omegas[i][j-1])]=ids[3]
+        # right hand side of the boundary
+        i = N-1
+        for j in range(1,N-1):
+            ids=five_point_stencil(N,i,j)
+            interfaces[interfaceStr.format(omegas[i][j],omegas[i-1][j])]=ids[1]
+            interfaces[interfaceStr.format(omegas[i][j],omegas[i][j+1])]=ids[2]
+            interfaces[interfaceStr.format(omegas[i][j],omegas[i][j-1])]=ids[3]
+        # bottom of the boundary
+        j = 0
+        for i in range(1,N-1):
+            ids=five_point_stencil(N,i,j)
+            interfaces[interfaceStr.format(omegas[i][j],omegas[i+1][j])]=ids[0]
+            interfaces[interfaceStr.format(omegas[i][j],omegas[i-1][j])]=ids[1]
+            interfaces[interfaceStr.format(omegas[i][j],omegas[i][j+1])]=ids[2]
 
+        # top of the boundary
+        j = N-1
+        for i in range(1,N-1):
+            ids=five_point_stencil(N,i,j)
+            interfaces[interfaceStr.format(omegas[i][j],omegas[i+1][j])]=ids[0]
+            interfaces[interfaceStr.format(omegas[i][j],omegas[i-1][j])]=ids[1]
+            interfaces[interfaceStr.format(omegas[i][j],omegas[i][j-1])]=ids[3]
+
+        # corners
+        # bottom lhs, i=j=0
+        i=0
+        j=0
+        ids=five_point_stencil(N,i,j)
+        interfaces[interfaceStr.format(omegas[i][j],omegas[i+1][j])]=ids[0]
+        interfaces[interfaceStr.format(omegas[i][j],omegas[i][j+1])]=ids[2]
+
+        # top lhs
+        i=0
+        j=N-1
+        ids=five_point_stencil(N,i,j)
+        interfaces[interfaceStr.format(omegas[i][j],omegas[i+1][j])]=ids[0]
+        interfaces[interfaceStr.format(omegas[i][j],omegas[i][j-1])]=ids[3]
+
+        # bottom rhs
+        i=N-1
+        j=0
+        ids=five_point_stencil(N,i,j)
+        interfaces[interfaceStr.format(omegas[i][j],omegas[i-1][j])]=ids[1]
+        interfaces[interfaceStr.format(omegas[i][j],omegas[i][j+1])]=ids[2]
+
+        # top rhs
+        i=N-1
+        j=N-1
+        ids=five_point_stencil(N,i,j)
+        interfaces[interfaceStr.format(omegas[i][j],omegas[i-1][j])]=ids[1]
+        interfaces[interfaceStr.format(omegas[i][j],omegas[i][j-1])]=ids[3]
+        return interfaces
+
+
+def inject_subdomain_information(input_file, output_file, bc_map, subdom_map, interface_map):
+    """
+    Given a particular input file, search through the the input file for the following key phrases:
+        - BC_MAP: mapping over which boundaries to apply Dirichlet boundary condition (values associated with keys are the value to be applied)
+        - SUBDOMAIN_MAP: mapping from names of subdomains to subdomain ids
+        - INTERFACE_MAP: mapping from strings of the form d<subdomain_i>n<subdomain_j> which specify the correct interface id to access the surface
+    Keyword arguments:
+    input_file -- the input file to apply the switch with
+    output_file -- the output file to write the changes to
+    bc_map -- see above.
+    subdom_map -- see above.
+    interface_map -- see above.
+    """
+    pLines=[]
+    with open(input_file) as f:
+        for line in f:
+            pLines.append(line)
+    programStr="".join(pLines)
+    # generate strings associated with the appropriate data structures
+    bc_map_str="{"
+    for key, value in bc_map.items():
+        bc_map_str += "{}:{},".format(key,value)
+    bc_map_str += "}"
+    subdomain_map_str="{"
+    for key, value in subdom_map.items():
+        subdomain_map_str += "{}:{}".format(key,value)
+    subdomain_map_str += "}"
+    interface_map_str="{"
+    for key,value in interface_map.items():
+        interface_map_str += "{}:{}".format(key,value)
+    interface_map_str+="}"
+
+    programStr=programStr.replace("BC_MAP",bc_map_str)
+    programStr=programStr.replace("SUBDOMAIN_MAP",subdomain_map_str)
+    programStr=programStr.replace("INTERFACE_MAP",interface_map_str)
+    output=open(output_file, "w")
+    output.write(programStr)
+    pass
