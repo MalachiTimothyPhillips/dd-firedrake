@@ -81,7 +81,7 @@ class SquareMeshBoundaryConditions(EnumerateBoundaryConditions):
         N=self.N
         omegas={}
         omegaStr="Omega{}"
-        for i in range(N):
+        for i in range(N*N):
             omegas[omegaStr.format(i+1)]=i+1
         return omegas
     def enumerateSubdomainBoundaries(self):
@@ -168,6 +168,27 @@ class SquareMeshBoundaryConditions(EnumerateBoundaryConditions):
         interfaces[interfaceStr.format(omegas[i][j],omegas[i][j-1])]=ids[3]
         return interfaces
 
+def stringify_dictionary(dictionary):
+    """
+    Output a python dictionary into a string representation that may be used 
+    directly in another python program.
+    """
+    dictionary_str="{"
+    for key, value in dictionary.items():
+        dictionary_str += '"{}":{},'.format(key,value)
+    dictionary_str += "}"
+    return dictionary_str
+
+def stringify_dictionary_as_literal(dictionary):
+    """
+    Output a python dictionary into a string representation that may be used 
+    directly in another python program.
+    """
+    dictionary_str="{"
+    for key, value in dictionary.items():
+        dictionary_str += '{}:{},'.format(key,value)
+    dictionary_str += "}"
+    return dictionary_str
 
 def inject_subdomain_information(input_file, output_file, bc_map, subdom_map, interface_map):
     """

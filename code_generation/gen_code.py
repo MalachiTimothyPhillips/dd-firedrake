@@ -4,10 +4,10 @@ class MalformedProgramError(Exception):
     pass
 
 def generate_program(input_file, output_file):
-    if "BEGIN PROGRAM HERE".lower() not in open(input_file).read().lower():
-        raise MalformedProgramError("Unable to find 'BEGIN PROGRAM HERE' label. Please check the program is correctly formed.")
-    if "END PROGRAM HERE".lower() not in open(input_file).read().lower():
-        raise MalformedProgramError("Unable to find 'END PROGRAM HERE' label. Please check the program is correctly formed.")
+    if "BEGIN_PROGRAM_HERE".lower() not in open(input_file).read().lower():
+        raise MalformedProgramError("Unable to find 'BEGIN_PROGRAM_HERE' label. Please check the program is correctly formed.")
+    if "END_PROGRAM_HERE".lower() not in open(input_file).read().lower():
+        raise MalformedProgramError("Unable to find 'END_PROGRAM_HERE' label. Please check the program is correctly formed.")
     
     doRead=False
     lines=[]
@@ -28,11 +28,11 @@ def generate_program(input_file, output_file):
     
     with open(input_file) as f:
         for line in f:
-            if "BEGIN PROGRAM HERE" in line.upper():
+            if "BEGIN_PROGRAM_HERE" in line.upper():
                 doRead=True
                 plines.append("PROGRAM_CODE\n")
                 continue
-            if "END PROGRAM HERE" in line.upper():
+            if "END_PROGRAM_HERE" in line.upper():
                 doRead=False
                 continue
             if doRead:
