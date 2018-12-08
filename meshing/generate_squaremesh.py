@@ -50,16 +50,34 @@ MY_OWN_CODE_GOES_HERE
     planeSurfStr="Plane Surface({:d})={{{:d}}};"
     physicalSurfaceStr="Physical Surface({:d})={{{:d}}};"
     recombStr="Recombine Surface {{{:d}}};"
+    idx_x=[[0,2]]
+    v=1
+    for ix in range(1,Nx-1):
+        idx_x.append([v,v+3])
+        v+=2
+    idx_x.append([v,v+2])
+    idx_y=[[0,2]]
+    v=1
+    for iy in range(1,Ny-1):
+        idx_y.append([v,v+3])
+        v+=2
+    idx_y.append([v,v+2])
+    print(idx_x)
+    print(idx_y)
     for iy in range(Ny):
         for ix in range(Nx):
             n1=new_node_id()
             n2=new_node_id()
             n3=new_node_id()
             n4=new_node_id()
-            e1=[n1,[pts[ix][iy][0],pts[ix][iy][1]]] 
-            e2=[n2,[pts[ix+2][iy][0],pts[ix][iy][1]]] 
-            e3=[n3,[pts[ix][iy][0],pts[ix][iy+2][1]]]
-            e4=[n4,[pts[ix+2][iy+2][0],pts[ix+2][iy+2][1]]] 
+            x0=idx_x[ix][0]
+            x1=idx_x[ix][1]
+            y0=idx_y[iy][0]
+            y1=idx_y[iy][1]
+            e1=[n1,[pts[x0][y0][0],pts[x0][y0][1]]] 
+            e2=[n2,[pts[x1][y0][0],pts[x0][y0][1]]] 
+            e3=[n3,[pts[x0][y0][0],pts[x0][y1][1]]]
+            e4=[n4,[pts[x1][y1][0],pts[x1][y1][1]]] 
             nodes=[e1,e2,e3,e4]
             v1=new_vertex_id()
             v2=new_vertex_id()
