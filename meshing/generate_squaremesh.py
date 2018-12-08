@@ -62,8 +62,6 @@ MY_OWN_CODE_GOES_HERE
         idx_y.append([v,v+3])
         v+=2
     idx_y.append([v,v+2])
-    print(idx_x)
-    print(idx_y)
     for iy in range(Ny):
         for ix in range(Nx):
             n1=new_node_id()
