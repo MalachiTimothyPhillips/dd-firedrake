@@ -22,26 +22,33 @@ N=MY_NX
 N_subdom=N*N
 V=FunctionSpace(mesh, "CG", 1) # piecewise linear elements
 
-u=TrialFunction(V)
-v=TestFunction(V)
+ref_mesh=Mesh(COMPARISON_MESH)
+V_ref=FunctionSpace(ref_mesh, "CG", 1)
+u=TrialFunction(V_ref)
+v=TestFunction(V_ref)
+f_ref=Function(V_ref)
+x,y=SpatialCoordinate(ref_mesh)
+f_ref.interpolate((8*pi*pi)*sin(2*pi*x)*sin(2*pi*y))
 f=Function(V)
 x,y=SpatialCoordinate(mesh)
 f.interpolate((8*pi*pi)*sin(2*pi*x)*sin(2*pi*y))
 params={'ksp_type':'preonly','pc_type':'lu'}
 
 a=dot(grad(u),grad(v))*dx
-L=f*v*dx
-u_entire=Function(V)
+L=f_ref*v*dx
+u_entire=Function(V_ref)
 
-bcNums=BC_MAP
-myBCs=[]
-for surface_face, value in bcNums.items():
-    myBCs.append(DirichletBC(V,value,surface_face))
+bc1=DirichletBC(V_ref,0.0,1)
+bc2=DirichletBC(V_ref,0.0,2)
+bc3=DirichletBC(V_ref,0.0,3)
+bc4=DirichletBC(V_ref,0.0,4)
 start_time1=time.time()
-solve(a==L,u_entire,bcs=myBCs,solver_parameters=params)
+solve(a==L,u_entire,bcs=[bc1,bc2,bc3,bc4],solver_parameters=params)
 end_time1=time.time()
 
 # for our purposes, we need to also generate timing data for the regular solve
+u=TrialFunction(V)
+v=TestFunction(V)
 
 start_time2=time.time()
 BEGIN_PROGRAM_HERE

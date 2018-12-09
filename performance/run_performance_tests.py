@@ -7,17 +7,23 @@ mesh_path="../meshing/"
 template_file="template.py"
 template_output="my_output_{}.py"
 template_final_output="final_output_{}.py"
-#Ns=[2,4,8,16,32,64]
-Ns=[4]
+Ns=[2,4,8,16,32,64]
+element_count=[128,192,768,1280,5120,20480]
+dimensions=[[8,16],[12,16],[24,32],[32,40],[64,80],[400,512]]
 meshName="{}x{}Overlap.msh"
+comp_form="{}x{}Comparison.msh"
 programStr=""
 with open(template_file,'r') as myfile:
     programStr=myfile.read()
-for n in Ns:
+for idx in range(len(Ns)):
+    n=Ns[idx]
+    dimension=dimensions[idx]
     my_program=programStr
     mesh= '"' + mesh_path + meshName.format(n,n) + '"'
+    comp_mesh= '"' + mesh_path + comp_form.format(n,n) + '"'
     my_program=my_program.replace("MY_NX",str(n))
     my_program=my_program.replace("MY_INPUT_MESH",mesh)
+    my_program=my_program.replace("COMPARISON_MESH",comp_mesh)
     sq = e.SquareMeshBoundaryConditions(n)
     bcMap = sq.enumerateDirichletBC()
     subdomainMap = sq.enumerateSubdomainMapping()
@@ -36,4 +42,4 @@ for n in Ns:
     f_out.write(my_program)
     f_out.close()
     final_output=template_final_output.format(n)
-    g.generate_program(output,final_output) 
+    g.generate_program(output,final_output)
