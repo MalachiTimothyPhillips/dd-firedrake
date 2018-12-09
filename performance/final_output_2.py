@@ -130,27 +130,27 @@ LOmega3 = f * v * dx(Omega3)
 aOmega4 = (dot(grad(u), grad(v))) * dx(Omega4)
 LOmega4 = f * v * dx(Omega4)
 bcOmega1=bcs.copy()
-e1=uOmega1_old+uOmega2_old
+e1=uOmega2_old
 bcOmega1.append(DirichletBC(V,e1,dOmega1nOmega2))
-e2=uOmega1_old+uOmega3_old
+e2=uOmega3_old
 bcOmega1.append(DirichletBC(V,e2,dOmega1nOmega3))
 bcOmega1.append(BC_Omega1_only)
 bcOmega2=bcs.copy()
-e3=uOmega2_old+uOmega1_old
+e3=uOmega1_old
 bcOmega2.append(DirichletBC(V,e3,dOmega2nOmega1))
-e4=uOmega2_old+uOmega4_old
+e4=uOmega4_old
 bcOmega2.append(DirichletBC(V,e4,dOmega2nOmega4))
 bcOmega2.append(BC_Omega2_only)
 bcOmega3=bcs.copy()
-e5=uOmega3_old+uOmega1_old
+e5=uOmega1_old
 bcOmega3.append(DirichletBC(V,e5,dOmega3nOmega1))
-e6=uOmega3_old+uOmega4_old
+e6=uOmega4_old
 bcOmega3.append(DirichletBC(V,e6,dOmega3nOmega4))
 bcOmega3.append(BC_Omega3_only)
 bcOmega4=bcs.copy()
-e7=uOmega4_old+uOmega2_old
+e7=uOmega2_old
 bcOmega4.append(DirichletBC(V,e7,dOmega4nOmega2))
-e8=uOmega4_old+uOmega3_old
+e8=uOmega3_old
 bcOmega4.append(DirichletBC(V,e8,dOmega4nOmega3))
 bcOmega4.append(BC_Omega4_only)
 nSchwarz=10

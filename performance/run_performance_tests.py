@@ -7,9 +7,11 @@ mesh_path="../meshing/"
 template_file="template.py"
 template_output="my_output_{}.py"
 template_final_output="final_output_{}.py"
-Ns=[2,4,8,16,32,64]
-element_count=[128,192,768,1280,5120,20480]
-dimensions=[[8,16],[12,16],[24,32],[32,40],[64,80],[400,512]]
+#Ns=[2,4,8,16,32,64]
+#element_count=[128,192,768,1280,5120,20480]
+#dimensions=[[8,16],[12,16],[24,32],[32,40],[64,80],[400,512]]
+Ns=[2,4,8]
+element_count=[128,192,760]
 meshName="{}x{}Overlap.msh"
 comp_form="{}x{}Comparison.msh"
 programStr=""
@@ -17,7 +19,6 @@ with open(template_file,'r') as myfile:
     programStr=myfile.read()
 for idx in range(len(Ns)):
     n=Ns[idx]
-    dimension=dimensions[idx]
     my_program=programStr
     mesh= '"' + mesh_path + meshName.format(n,n) + '"'
     comp_mesh= '"' + mesh_path + comp_form.format(n,n) + '"'

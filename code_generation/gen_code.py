@@ -152,8 +152,7 @@ for surface, value in dirichletBCs.items():
     bcName="bc{}"
     copyStr="{}=bcs.copy()"
     interfaceStr="d{}n{}"
-    uniqueExprCtr = 1
-    exprStr="e{}={}+{}"
+    exprStr="e{}={}"
     for subdomain, subdomain_id in domains.items():
         name = bcName.format(subdomain)
         bcs[subdomain]=name
@@ -164,7 +163,7 @@ for surface, value in dirichletBCs.items():
             my_interface = interfaceStr.format(subdomain, other_subdomain)
             if my_interface in interfaces:
                 expr="e{}".format(uniqueExprCtr)
-                clines.append(exprStr.format(uniqueExprCtr,u_old[subdomain],u_old[other_subdomain]))
+                clines.append(exprStr.format(uniqueExprCtr,u_old[other_subdomain]))
                 clines.append("{}.append({})".format(name, "DirichletBC({},{},{})".format(functionSpace, expr, my_interface)))
                 uniqueExprCtr+=1
         clines.append("{}.append({})".format(name,bc_excludes[subdomain]))
