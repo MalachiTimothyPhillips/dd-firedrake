@@ -50,7 +50,6 @@ end_time1=time.time()
 u=TrialFunction(V)
 v=TestFunction(V)
 
-start_time2=time.time()
 dirichletBCs={1:0,2:0,32:0,227:0,5:0,34:0,64:0,231:0,9:0,66:0,96:0,235:0,13:0,98:0,128:0,239:0,17:0,130:0,160:0,243:0,21:0,162:0,192:0,247:0,25:0,194:0,224:0,251:0,29:0,226:0,256:0,255:0,}
 
 domains={"Omega1":1,"Omega2":2,"Omega3":3,"Omega4":4,"Omega5":5,"Omega6":6,"Omega7":7,"Omega8":8,"Omega9":9,"Omega10":10,"Omega11":11,"Omega12":12,"Omega13":13,"Omega14":14,"Omega15":15,"Omega16":16,"Omega17":17,"Omega18":18,"Omega19":19,"Omega20":20,"Omega21":21,"Omega22":22,"Omega23":23,"Omega24":24,"Omega25":25,"Omega26":26,"Omega27":27,"Omega28":28,"Omega29":29,"Omega30":30,"Omega31":31,"Omega32":32,"Omega33":33,"Omega34":34,"Omega35":35,"Omega36":36,"Omega37":37,"Omega38":38,"Omega39":39,"Omega40":40,"Omega41":41,"Omega42":42,"Omega43":43,"Omega44":44,"Omega45":45,"Omega46":46,"Omega47":47,"Omega48":48,"Omega49":49,"Omega50":50,"Omega51":51,"Omega52":52,"Omega53":53,"Omega54":54,"Omega55":55,"Omega56":56,"Omega57":57,"Omega58":58,"Omega59":59,"Omega60":60,"Omega61":61,"Omega62":62,"Omega63":63,"Omega64":64,}
@@ -1702,71 +1701,136 @@ e224=uOmega63_old
 bcOmega64.append(DirichletBC(V,e224,dOmega64nOmega63))
 bcOmega64.append(BC_Omega64_only)
 nSchwarz=2
+solve(aOmega1==LOmega1,uOmega1,bcs=bcOmega1,solver_parameters=params)
+solve(aOmega2==LOmega2,uOmega2,bcs=bcOmega2,solver_parameters=params)
+solve(aOmega3==LOmega3,uOmega3,bcs=bcOmega3,solver_parameters=params)
+solve(aOmega4==LOmega4,uOmega4,bcs=bcOmega4,solver_parameters=params)
+solve(aOmega5==LOmega5,uOmega5,bcs=bcOmega5,solver_parameters=params)
+solve(aOmega6==LOmega6,uOmega6,bcs=bcOmega6,solver_parameters=params)
+solve(aOmega7==LOmega7,uOmega7,bcs=bcOmega7,solver_parameters=params)
+solve(aOmega8==LOmega8,uOmega8,bcs=bcOmega8,solver_parameters=params)
+solve(aOmega9==LOmega9,uOmega9,bcs=bcOmega9,solver_parameters=params)
+solve(aOmega10==LOmega10,uOmega10,bcs=bcOmega10,solver_parameters=params)
+solve(aOmega11==LOmega11,uOmega11,bcs=bcOmega11,solver_parameters=params)
+solve(aOmega12==LOmega12,uOmega12,bcs=bcOmega12,solver_parameters=params)
+solve(aOmega13==LOmega13,uOmega13,bcs=bcOmega13,solver_parameters=params)
+solve(aOmega14==LOmega14,uOmega14,bcs=bcOmega14,solver_parameters=params)
+solve(aOmega15==LOmega15,uOmega15,bcs=bcOmega15,solver_parameters=params)
+solve(aOmega16==LOmega16,uOmega16,bcs=bcOmega16,solver_parameters=params)
+solve(aOmega17==LOmega17,uOmega17,bcs=bcOmega17,solver_parameters=params)
+solve(aOmega18==LOmega18,uOmega18,bcs=bcOmega18,solver_parameters=params)
+solve(aOmega19==LOmega19,uOmega19,bcs=bcOmega19,solver_parameters=params)
+solve(aOmega20==LOmega20,uOmega20,bcs=bcOmega20,solver_parameters=params)
+solve(aOmega21==LOmega21,uOmega21,bcs=bcOmega21,solver_parameters=params)
+solve(aOmega22==LOmega22,uOmega22,bcs=bcOmega22,solver_parameters=params)
+solve(aOmega23==LOmega23,uOmega23,bcs=bcOmega23,solver_parameters=params)
+solve(aOmega24==LOmega24,uOmega24,bcs=bcOmega24,solver_parameters=params)
+solve(aOmega25==LOmega25,uOmega25,bcs=bcOmega25,solver_parameters=params)
+solve(aOmega26==LOmega26,uOmega26,bcs=bcOmega26,solver_parameters=params)
+solve(aOmega27==LOmega27,uOmega27,bcs=bcOmega27,solver_parameters=params)
+solve(aOmega28==LOmega28,uOmega28,bcs=bcOmega28,solver_parameters=params)
+solve(aOmega29==LOmega29,uOmega29,bcs=bcOmega29,solver_parameters=params)
+solve(aOmega30==LOmega30,uOmega30,bcs=bcOmega30,solver_parameters=params)
+solve(aOmega31==LOmega31,uOmega31,bcs=bcOmega31,solver_parameters=params)
+solve(aOmega32==LOmega32,uOmega32,bcs=bcOmega32,solver_parameters=params)
+solve(aOmega33==LOmega33,uOmega33,bcs=bcOmega33,solver_parameters=params)
+solve(aOmega34==LOmega34,uOmega34,bcs=bcOmega34,solver_parameters=params)
+solve(aOmega35==LOmega35,uOmega35,bcs=bcOmega35,solver_parameters=params)
+solve(aOmega36==LOmega36,uOmega36,bcs=bcOmega36,solver_parameters=params)
+solve(aOmega37==LOmega37,uOmega37,bcs=bcOmega37,solver_parameters=params)
+solve(aOmega38==LOmega38,uOmega38,bcs=bcOmega38,solver_parameters=params)
+solve(aOmega39==LOmega39,uOmega39,bcs=bcOmega39,solver_parameters=params)
+solve(aOmega40==LOmega40,uOmega40,bcs=bcOmega40,solver_parameters=params)
+solve(aOmega41==LOmega41,uOmega41,bcs=bcOmega41,solver_parameters=params)
+solve(aOmega42==LOmega42,uOmega42,bcs=bcOmega42,solver_parameters=params)
+solve(aOmega43==LOmega43,uOmega43,bcs=bcOmega43,solver_parameters=params)
+solve(aOmega44==LOmega44,uOmega44,bcs=bcOmega44,solver_parameters=params)
+solve(aOmega45==LOmega45,uOmega45,bcs=bcOmega45,solver_parameters=params)
+solve(aOmega46==LOmega46,uOmega46,bcs=bcOmega46,solver_parameters=params)
+solve(aOmega47==LOmega47,uOmega47,bcs=bcOmega47,solver_parameters=params)
+solve(aOmega48==LOmega48,uOmega48,bcs=bcOmega48,solver_parameters=params)
+solve(aOmega49==LOmega49,uOmega49,bcs=bcOmega49,solver_parameters=params)
+solve(aOmega50==LOmega50,uOmega50,bcs=bcOmega50,solver_parameters=params)
+solve(aOmega51==LOmega51,uOmega51,bcs=bcOmega51,solver_parameters=params)
+solve(aOmega52==LOmega52,uOmega52,bcs=bcOmega52,solver_parameters=params)
+solve(aOmega53==LOmega53,uOmega53,bcs=bcOmega53,solver_parameters=params)
+solve(aOmega54==LOmega54,uOmega54,bcs=bcOmega54,solver_parameters=params)
+solve(aOmega55==LOmega55,uOmega55,bcs=bcOmega55,solver_parameters=params)
+solve(aOmega56==LOmega56,uOmega56,bcs=bcOmega56,solver_parameters=params)
+solve(aOmega57==LOmega57,uOmega57,bcs=bcOmega57,solver_parameters=params)
+solve(aOmega58==LOmega58,uOmega58,bcs=bcOmega58,solver_parameters=params)
+solve(aOmega59==LOmega59,uOmega59,bcs=bcOmega59,solver_parameters=params)
+solve(aOmega60==LOmega60,uOmega60,bcs=bcOmega60,solver_parameters=params)
+solve(aOmega61==LOmega61,uOmega61,bcs=bcOmega61,solver_parameters=params)
+solve(aOmega62==LOmega62,uOmega62,bcs=bcOmega62,solver_parameters=params)
+solve(aOmega63==LOmega63,uOmega63,bcs=bcOmega63,solver_parameters=params)
+solve(aOmega64==LOmega64,uOmega64,bcs=bcOmega64,solver_parameters=params)
+start_time2=time.time()
 for iteration in range(nSchwarz):
-	uOmega1_old=uOmega1
-	uOmega2_old=uOmega2
-	uOmega3_old=uOmega3
-	uOmega4_old=uOmega4
-	uOmega5_old=uOmega5
-	uOmega6_old=uOmega6
-	uOmega7_old=uOmega7
-	uOmega8_old=uOmega8
-	uOmega9_old=uOmega9
-	uOmega10_old=uOmega10
-	uOmega11_old=uOmega11
-	uOmega12_old=uOmega12
-	uOmega13_old=uOmega13
-	uOmega14_old=uOmega14
-	uOmega15_old=uOmega15
-	uOmega16_old=uOmega16
-	uOmega17_old=uOmega17
-	uOmega18_old=uOmega18
-	uOmega19_old=uOmega19
-	uOmega20_old=uOmega20
-	uOmega21_old=uOmega21
-	uOmega22_old=uOmega22
-	uOmega23_old=uOmega23
-	uOmega24_old=uOmega24
-	uOmega25_old=uOmega25
-	uOmega26_old=uOmega26
-	uOmega27_old=uOmega27
-	uOmega28_old=uOmega28
-	uOmega29_old=uOmega29
-	uOmega30_old=uOmega30
-	uOmega31_old=uOmega31
-	uOmega32_old=uOmega32
-	uOmega33_old=uOmega33
-	uOmega34_old=uOmega34
-	uOmega35_old=uOmega35
-	uOmega36_old=uOmega36
-	uOmega37_old=uOmega37
-	uOmega38_old=uOmega38
-	uOmega39_old=uOmega39
-	uOmega40_old=uOmega40
-	uOmega41_old=uOmega41
-	uOmega42_old=uOmega42
-	uOmega43_old=uOmega43
-	uOmega44_old=uOmega44
-	uOmega45_old=uOmega45
-	uOmega46_old=uOmega46
-	uOmega47_old=uOmega47
-	uOmega48_old=uOmega48
-	uOmega49_old=uOmega49
-	uOmega50_old=uOmega50
-	uOmega51_old=uOmega51
-	uOmega52_old=uOmega52
-	uOmega53_old=uOmega53
-	uOmega54_old=uOmega54
-	uOmega55_old=uOmega55
-	uOmega56_old=uOmega56
-	uOmega57_old=uOmega57
-	uOmega58_old=uOmega58
-	uOmega59_old=uOmega59
-	uOmega60_old=uOmega60
-	uOmega61_old=uOmega61
-	uOmega62_old=uOmega62
-	uOmega63_old=uOmega63
-	uOmega64_old=uOmega64
+	#uOmega1_old=uOmega1
+	#uOmega2_old=uOmega2
+	#uOmega3_old=uOmega3
+	#uOmega4_old=uOmega4
+	#uOmega5_old=uOmega5
+	#uOmega6_old=uOmega6
+	#uOmega7_old=uOmega7
+	#uOmega8_old=uOmega8
+	#uOmega9_old=uOmega9
+	#uOmega10_old=uOmega10
+	#uOmega11_old=uOmega11
+	#uOmega12_old=uOmega12
+	#uOmega13_old=uOmega13
+	#uOmega14_old=uOmega14
+	#uOmega15_old=uOmega15
+	#uOmega16_old=uOmega16
+	#uOmega17_old=uOmega17
+	#uOmega18_old=uOmega18
+	#uOmega19_old=uOmega19
+	#uOmega20_old=uOmega20
+	#uOmega21_old=uOmega21
+	#uOmega22_old=uOmega22
+	#uOmega23_old=uOmega23
+	#uOmega24_old=uOmega24
+	#uOmega25_old=uOmega25
+	#uOmega26_old=uOmega26
+	#uOmega27_old=uOmega27
+	#uOmega28_old=uOmega28
+	#uOmega29_old=uOmega29
+	#uOmega30_old=uOmega30
+	#uOmega31_old=uOmega31
+	#uOmega32_old=uOmega32
+	#uOmega33_old=uOmega33
+	#uOmega34_old=uOmega34
+	#uOmega35_old=uOmega35
+	#uOmega36_old=uOmega36
+	#uOmega37_old=uOmega37
+	#uOmega38_old=uOmega38
+	#uOmega39_old=uOmega39
+	#uOmega40_old=uOmega40
+	#uOmega41_old=uOmega41
+	#uOmega42_old=uOmega42
+	#uOmega43_old=uOmega43
+	#uOmega44_old=uOmega44
+	#uOmega45_old=uOmega45
+	#uOmega46_old=uOmega46
+	#uOmega47_old=uOmega47
+	#uOmega48_old=uOmega48
+	#uOmega49_old=uOmega49
+	#uOmega50_old=uOmega50
+	#uOmega51_old=uOmega51
+	#uOmega52_old=uOmega52
+	#uOmega53_old=uOmega53
+	#uOmega54_old=uOmega54
+	#uOmega55_old=uOmega55
+	#uOmega56_old=uOmega56
+	#uOmega57_old=uOmega57
+	#uOmega58_old=uOmega58
+	#uOmega59_old=uOmega59
+	#uOmega60_old=uOmega60
+	#uOmega61_old=uOmega61
+	#uOmega62_old=uOmega62
+	#uOmega63_old=uOmega63
+	#uOmega64_old=uOmega64
 	solve(aOmega1==LOmega1,uOmega1,bcs=bcOmega1,solver_parameters=params)
 	solve(aOmega2==LOmega2,uOmega2,bcs=bcOmega2,solver_parameters=params)
 	solve(aOmega3==LOmega3,uOmega3,bcs=bcOmega3,solver_parameters=params)

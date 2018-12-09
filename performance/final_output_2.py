@@ -50,7 +50,6 @@ end_time1=time.time()
 u=TrialFunction(V)
 v=TestFunction(V)
 
-start_time2=time.time()
 dirichletBCs={1:0,2:0,8:0,11:0,5:0,10:0,16:0,15:0,}
 
 domains={"Omega1":1,"Omega2":2,"Omega3":3,"Omega4":4,}
@@ -153,7 +152,12 @@ bcOmega4.append(DirichletBC(V,e7,dOmega4nOmega2))
 e8=uOmega3_old
 bcOmega4.append(DirichletBC(V,e8,dOmega4nOmega3))
 bcOmega4.append(BC_Omega4_only)
-nSchwarz=10
+nSchwarz=2
+solve(aOmega1==LOmega1,uOmega1,bcs=bcOmega1,solver_parameters=params)
+solve(aOmega2==LOmega2,uOmega2,bcs=bcOmega2,solver_parameters=params)
+solve(aOmega3==LOmega3,uOmega3,bcs=bcOmega3,solver_parameters=params)
+solve(aOmega4==LOmega4,uOmega4,bcs=bcOmega4,solver_parameters=params)
+start_time2=time.time()
 for iteration in range(nSchwarz):
 	uOmega1_old=uOmega1
 	uOmega2_old=uOmega2

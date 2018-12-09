@@ -50,7 +50,6 @@ end_time1=time.time()
 u=TrialFunction(V)
 v=TestFunction(V)
 
-start_time2=time.time()
 dirichletBCs={1:0,2:0,16:0,51:0,5:0,18:0,32:0,55:0,9:0,34:0,48:0,59:0,13:0,50:0,64:0,63:0,}
 
 domains={"Omega1":1,"Omega2":2,"Omega3":3,"Omega4":4,"Omega5":5,"Omega6":6,"Omega7":7,"Omega8":8,"Omega9":9,"Omega10":10,"Omega11":11,"Omega12":12,"Omega13":13,"Omega14":14,"Omega15":15,"Omega16":16,}
@@ -453,7 +452,24 @@ bcOmega16.append(DirichletBC(V,e47,dOmega16nOmega12))
 e48=uOmega15_old
 bcOmega16.append(DirichletBC(V,e48,dOmega16nOmega15))
 bcOmega16.append(BC_Omega16_only)
-nSchwarz=10
+solve(aOmega1==LOmega1,uOmega1,bcs=bcOmega1,solver_parameters=params)
+solve(aOmega2==LOmega2,uOmega2,bcs=bcOmega2,solver_parameters=params)
+solve(aOmega3==LOmega3,uOmega3,bcs=bcOmega3,solver_parameters=params)
+solve(aOmega4==LOmega4,uOmega4,bcs=bcOmega4,solver_parameters=params)
+solve(aOmega5==LOmega5,uOmega5,bcs=bcOmega5,solver_parameters=params)
+solve(aOmega6==LOmega6,uOmega6,bcs=bcOmega6,solver_parameters=params)
+solve(aOmega7==LOmega7,uOmega7,bcs=bcOmega7,solver_parameters=params)
+solve(aOmega8==LOmega8,uOmega8,bcs=bcOmega8,solver_parameters=params)
+solve(aOmega9==LOmega9,uOmega9,bcs=bcOmega9,solver_parameters=params)
+solve(aOmega10==LOmega10,uOmega10,bcs=bcOmega10,solver_parameters=params)
+solve(aOmega11==LOmega11,uOmega11,bcs=bcOmega11,solver_parameters=params)
+solve(aOmega12==LOmega12,uOmega12,bcs=bcOmega12,solver_parameters=params)
+solve(aOmega13==LOmega13,uOmega13,bcs=bcOmega13,solver_parameters=params)
+solve(aOmega14==LOmega14,uOmega14,bcs=bcOmega14,solver_parameters=params)
+solve(aOmega15==LOmega15,uOmega15,bcs=bcOmega15,solver_parameters=params)
+solve(aOmega16==LOmega16,uOmega16,bcs=bcOmega16,solver_parameters=params)
+nSchwarz=2
+start_time2=time.time()
 for iteration in range(nSchwarz):
 	uOmega1_old=uOmega1
 	uOmega2_old=uOmega2
