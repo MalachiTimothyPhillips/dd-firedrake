@@ -1,0 +1,30 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red187\green187\blue187;\red64\green128\blue128;\red188\green122\blue0;\red0\green128\blue0;\red176\green0\blue64;\red102\green102\blue102;\red170\green34\blue255;\red0\green0\blue255;\red210\green65\blue58;\red25\green23\blue124;\red136\green0\blue0;\red160\green160\blue0;\red153\green153\blue153;\red125\green144\blue41;\red186\green33\blue33;\red187\green102\blue136;\red187\green102\blue34;\red0\green0\blue128;\red128\green0\blue128;\red160\green0\blue0;\red0\green160\blue0;\red255\green0\blue0;\red136\green136\blue136;\red0\green68\blue221;}\f0 {\cf4\b from} {\cf8\b firedrake} {\cf4\b import} {\cf6 *}\par
+mesh{\cf6 =}Mesh({\cf6 .}{\cf6 .}{\cf6 .})\par
+V{\cf6 =}FunctionSpace(mesh, {\cf15 "}{\cf15 CG}{\cf15 "}, {\cf6 1})\par
+u{\cf6 =}TrialFunction(V)\par
+v{\cf6 =}TestFunction(V)\par
+f{\cf6 =}Function(V)\par
+x,y{\cf6 =}SpatialCoordinate(mesh)\par
+f{\cf6 .}interpolate(({\cf6 8}{\cf6 *}pi{\cf6 *}pi){\cf6 *}sin({\cf6 2}{\cf6 *}pi{\cf6 *}x){\cf6 *}sin({\cf6 2}{\cf6 *}pi{\cf6 *}y))\par
+params{\cf6 =}\{{\cf15 '}{\cf15 ksp_type}{\cf15 '}:{\cf15 '}{\cf15 preonly}{\cf15 '},{\cf15 '}{\cf15 pc_type}{\cf15 '}:{\cf15 '}{\cf15 lu}{\cf15 '}\}\par
+a{\cf6 =}dot(grad(u),grad(v)){\cf6 *}dx\par
+L{\cf6 =}f{\cf6 *}v{\cf6 *}dx\par
+myBCSurfaces{\cf6 =}[{\cf6 .}{\cf6 .}{\cf6 .}]\par
+myBCs{\cf6 =}[]\par
+{\cf4\b for} surface {\cf7\b in} myBCSurfaces:\par
+    myBCs{\cf6 .}append(DirichletBC(V,{\cf6 0},surface))\par
+BEGIN PROGRAM HERE\par
+mesh_name {\cf6 ~} mesh\par
+form {\cf6 ~} (dot(grad(u), grad(v))) {\cf6 *} dx\par
+rhs {\cf6 ~} f {\cf6 *} v {\cf6 *} dx\par
+space_variable {\cf6 ~} coord\par
+functionSpace {\cf6 ~} V\par
+dirichletBCs{\cf6 =}\{{\cf6 .}{\cf6 .}{\cf6 .}\}\par
+{\cf2\i # domain number to id mapping}\par
+domains{\cf6 =}\{{\cf6 .}{\cf6 .}{\cf6 .}\}\par
+{\cf2\i # [domain number, domain number]->interface id mapping}\par
+interfaces{\cf6 =}\{{\cf6 .}{\cf6 .}{\cf6 .}\}\par
+solution{\cf6 ~}u\par
+solver_settings {\cf6 ~} solver_parameters{\cf6 =}params\par
+END PROGRAM HERE\par
+}
