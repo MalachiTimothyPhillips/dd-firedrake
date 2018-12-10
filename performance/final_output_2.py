@@ -152,7 +152,7 @@ bcOmega4.append(DirichletBC(V,e7,dOmega4nOmega2))
 e8=uOmega3_old
 bcOmega4.append(DirichletBC(V,e8,dOmega4nOmega3))
 bcOmega4.append(BC_Omega4_only)
-nSchwarz=2
+nSchwarz=5
 solve(aOmega1==LOmega1,uOmega1,bcs=bcOmega1,solver_parameters=params)
 solve(aOmega2==LOmega2,uOmega2,bcs=bcOmega2,solver_parameters=params)
 solve(aOmega3==LOmega3,uOmega3,bcs=bcOmega3,solver_parameters=params)
